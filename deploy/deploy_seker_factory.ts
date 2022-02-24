@@ -5,11 +5,10 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre;
   const { deployer } = await getNamedAccounts();
   const { deploy } = deployments;
-  const args = [];
 
   await deploy("SekerFactory", {
     from: deployer,
-    args,
+    args: [],
     log: true,
     deterministicDeployment: true,
   });
