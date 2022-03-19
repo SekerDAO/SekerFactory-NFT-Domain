@@ -1,0 +1,34 @@
+import { expect } from "chai";
+import hre, { deployments, waffle, ethers } from "hardhat";
+import "@nomiclabs/hardhat-ethers";
+
+const ZeroState =
+  "0x0000000000000000000000000000000000000000000000000000000000000000";
+const ZeroAddress = "0x0000000000000000000000000000000000000000";
+const FirstAddress = "0x0000000000000000000000000000000000000001";
+
+describe("SekerFactorNFT", async () => {
+  const baseSetup = deployments.createFixture(async () => {
+    await deployments.fixture();
+
+    const SekerFactory = await hre.ethers.getContractFactory("SekerFactory");
+    const sekerFactory = await SekerFactory.deploy();
+
+    return { SekerFactory, sekerFactory };
+  });
+
+  const [user1] = waffle.provider.getWallets();
+
+  describe("initialize", async () => {
+    it("should initialize NFT contract", async () => {
+      const { sekerFactory } = await baseSetup();
+      const minterRole = await sekerFactory.MINTER_ROLE()
+      await sekerFactory.grantRole(minterRole, user1.address)
+      const hasRole = await sekerFactory.hasRole(minterRole, user1.address)
+      console.log(hasRole)
+      await sekerFactory.mint("https://gateway.pinata.cloud/ipfs/QmXcztC1qwqNiUe4vHRNJioDGGxUsVYLjcXb8c9GJZSo6h")
+      const uri = await sekerFactory.tokenURI(0);
+      console.log(uri);
+    });
+  });
+});
