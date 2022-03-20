@@ -1,5 +1,6 @@
 import { DeployFunction } from "hardhat-deploy/types";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
+import hre, { deployments, waffle, ethers } from "hardhat";
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre;
@@ -11,6 +12,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: [],
     log: true,
     deterministicDeployment: true,
+    gasPrice: ethers.BigNumber.from("40000000000")
   });
 };
 

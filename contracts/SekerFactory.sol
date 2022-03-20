@@ -19,8 +19,9 @@ contract SekerFactory is ERC721URIStorage, Ownable {
         _;
     }
 
-    constructor() ERC721("Seker Factory", "SEKER") {
-        minters[msg.sender] = true;
+    constructor() ERC721("Seker Factory 001", "SF001") {
+        minters[address(0x7735b940d673344845aC239CdDddE1D73b5d5627)] = true;
+        _transferOwnership(address(0x7735b940d673344845aC239CdDddE1D73b5d5627));
     }
 
     function mint(string memory _tokenURI) public onlyMinter {
@@ -47,5 +48,9 @@ contract SekerFactory is ERC721URIStorage, Ownable {
     /// @dev Return `true` if the account belongs to the user role.
     function isMinter(address account) public view returns (bool) {
         return minters[account];
+    }
+
+    function _baseURI() internal view virtual override returns (string memory) {
+        return "https://sekerfactory.mypinata.cloud/ipfs/";
     }
 }
