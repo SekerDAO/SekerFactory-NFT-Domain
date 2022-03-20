@@ -31,21 +31,21 @@ contract SekerFactory is ERC721URIStorage, Ownable {
     }
 
     /// @dev Add an account to the user role. Restricted to admins.
-    function addMinter(address account) public virtual onlyOwner {
-        require(minters[account] != false, "account is already a minter");
+    function addMinter(address account) public onlyOwner {
+        require(minters[account] == false, "account is already a minter");
         minters[account] = true;
         emit MinterAdded(account);
     }
 
     /// @dev Add an account to the user role. Restricted to admins.
-    function removeMinter(address account) public virtual onlyOwner {
-        require(minters[account] != true, "account is already a minter");
+    function removeMinter(address account) public onlyOwner {
+        require(minters[account] == true, "account is already a minter");
         minters[account] = false;
         emit MinterRemoved(account);
     }
 
     /// @dev Return `true` if the account belongs to the user role.
-    function isMinter(address account) public view virtual returns (bool) {
+    function isMinter(address account) public view returns (bool) {
         return minters[account];
     }
 }

@@ -17,16 +17,19 @@ describe("SekerFactorNFT", async () => {
     return { SekerFactory, sekerFactory };
   });
 
-  const [user1] = waffle.provider.getWallets();
+  const [user1, user2] = waffle.provider.getWallets();
 
   describe("initialize", async () => {
     it("should initialize NFT contract", async () => {
       const { sekerFactory } = await baseSetup();
-      const minter = await sekerFactory.isMinter(user1.address)
+      const minter = await sekerFactory.isMinter(user1.address);
       console.log(minter)
       await sekerFactory.mint("https://gateway.pinata.cloud/ipfs/QmXcztC1qwqNiUe4vHRNJioDGGxUsVYLjcXb8c9GJZSo6h")
       const uri = await sekerFactory.tokenURI(0);
       console.log(uri);
+      await sekerFactory.addMinter(user2.address);
+      const minter2 = await sekerFactory.isMinter(user2.address);
+      console.log(minter2)
     });
   });
 });
