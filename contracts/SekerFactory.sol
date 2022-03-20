@@ -37,7 +37,7 @@ contract SekerFactory is ERC721URIStorage, Ownable {
         emit MinterAdded(account);
     }
 
-    /// @dev Add an account to the user role. Restricted to admins.
+    /// @dev Remove an account to the user role. Restricted to admins.
     function removeMinter(address account) public onlyOwner {
         require(minters[account] == true, "account is already a minter");
         minters[account] = false;
